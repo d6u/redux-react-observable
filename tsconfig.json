@@ -1,0 +1,20 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "es6",
+    "target": "es6",
+    "jsx": "react",
+    "noImplicitAny": false,
+    "outDir": "lib-es6",
+    "declaration": true,
+    "listFiles": true,
+    "pretty": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "files": [
+    "src/index.ts",
+    "typings/browser.d.ts"
+  ]
+}
