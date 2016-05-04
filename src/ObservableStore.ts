@@ -1,16 +1,16 @@
-import React, {Component, Children, PropTypes} from 'react';
+import {Component, Children, PropTypes} from 'react';
 import {ObserveObjectPath} from 'observe-object-path';
 import {
   Unsubscribe,
   Store,
   ObservableStoreProps,
-  ObservableStoreContext
+  ObservableStoreContext,
 } from './interfaces';
 
 export default class ObservableStore extends Component<ObservableStoreProps, void> {
 
   static childContextTypes = {
-    observableStore: PropTypes.object.isRequired
+    observableStore: PropTypes.object.isRequired,
   };
 
   private observableStore: ObserveObjectPath;

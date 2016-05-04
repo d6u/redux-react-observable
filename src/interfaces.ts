@@ -21,14 +21,12 @@ export interface KeyPathMap {
   [key: string]: string[];
 }
 
-export type StoreSelector<T> = (T) => KeyPathMap;
+export type StoreSelector<T> = (props: T) => KeyPathMap;
 
 export interface StoreObserverState {
   [key: string]: any;
 }
 
-export type KeyPathHandler = (any) => void;
+export type KeyPathHandler = (value: any) => void;
 
 export type KeyPathHandlerPair = [string[], KeyPathHandler];
-
-export type KeyPathHandlerPairs = KeyPathHandlerPair[];
