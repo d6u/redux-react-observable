@@ -32,6 +32,8 @@
     "webpack": "1.13.0"
   },
   "scripts": {
+    "lint": "tslint src/*",
+    "test": "",
     "clean": "rimraf lib lib-es6",
     "build:lib-es6": "tsc",
     "build:lib": "babel -d lib lib-es6",
