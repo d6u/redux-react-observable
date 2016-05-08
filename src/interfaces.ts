@@ -1,16 +1,8 @@
+import {Store} from 'redux';
 import {ObserveObjectPath} from 'observe-object-path';
 
-export interface Unsubscribe {
-  (): void;
-}
-
-export interface Store {
-  subscribe(listener: () => void): Unsubscribe;
-  getState(): any;
-}
-
 export interface ObservableStoreProps {
-  store: Store;
+  store: Store<any>;
 }
 
 export interface ObservableStoreContext {
@@ -21,12 +13,16 @@ export interface KeyPathMap {
   [key: string]: string[];
 }
 
-export type StoreSelector<T> = (props: T) => KeyPathMap;
+export interface StoreSelector<T> {
+  (props: T): KeyPathMap;
+}
 
 export interface StoreObserverState {
   [key: string]: any;
 }
 
-export type KeyPathHandler = (value: any) => void;
+export interface KeyPathHandler {
+  (value: any): void;
+}
 
 export type KeyPathHandlerPair = [string[], KeyPathHandler];

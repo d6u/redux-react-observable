@@ -1,4 +1,4 @@
-import React, {Component, PropTypes, ComponentClass} from 'react';
+import React, {Component, PropTypes, ComponentClass, Validator} from 'react';
 import {map, toPairs} from 'ramda';
 import {
   ObservableStoreContext,
@@ -10,12 +10,11 @@ import {
 export default function<P> (
   selector: StoreSelector<P>,
   Comp: ComponentClass<P>
-// TODO: improve return type
-): any {
+): ComponentClass<P> {
 
   return class StoreObserver extends Component<P, StoreObserverState> {
 
-    static contextTypes = {
+    static contextTypes: {[key: string]: Validator<any>} = {
       observableStore: PropTypes.object.isRequired,
     };
 

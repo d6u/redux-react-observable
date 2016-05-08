@@ -1,11 +1,7 @@
 import {Component, Children, PropTypes} from 'react';
+import {Store, Unsubscribe} from 'redux';
 import {ObserveObjectPath} from 'observe-object-path';
-import {
-  Unsubscribe,
-  Store,
-  ObservableStoreProps,
-  ObservableStoreContext,
-} from './interfaces';
+import {ObservableStoreProps, ObservableStoreContext} from './interfaces';
 
 export default class ObservableStore extends Component<ObservableStoreProps, void> {
 
@@ -15,7 +11,7 @@ export default class ObservableStore extends Component<ObservableStoreProps, voi
 
   private observableStore: ObserveObjectPath;
   private unsubscribe: Unsubscribe;
-  private store: Store;
+  private store: Store<any>;
 
   constructor(props: ObservableStoreProps) {
     super(props);
