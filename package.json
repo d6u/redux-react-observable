@@ -1,5 +1,5 @@
 {
-  "name": "redux-observe-store-path",
+  "name": "redux-react-observable",
   "version": "0.0.2",
   "keywords": [
     "redux",
@@ -7,16 +7,16 @@
     "react-component",
     "observable"
   ],
-  "homepage": "https://github.com/d6u/redux-observe-store-path#readme",
-  "description": "Descriptive Redux React binding",
+  "homepage": "https://github.com/d6u/redux-react-observable#readme",
+  "description": "Efficient and descriptive Redux React bindings",
   "author": "Daiwei Lu <daiweilu123@gmail.com> (http://daiwei.lu/)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/d6u/redux-observe-store-path.git"
+    "url": "git+https://github.com/d6u/redux-react-observable.git"
   },
   "bugs": {
-    "url": "https://github.com/d6u/redux-observe-store-path/issues"
+    "url": "https://github.com/d6u/redux-react-observable/issues"
   },
   "main": "lib/index.js",
   "jsnext:main": "lib-es6/index.js",
@@ -55,6 +55,7 @@
     "webpack": "1.13.0"
   },
   "scripts": {
+    "setup": "typings install",
     "clean": "rimraf lib lib-es6",
     "lint": "tslint src/*",
     "test": "karma start",
