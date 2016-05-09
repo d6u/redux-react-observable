@@ -50,6 +50,8 @@
     "build:lib": "babel -d lib lib-es6",
     "build": "npm run clean && npm run build:lib-es6 && npm run build:lib",
     "prewatch:build": "npm run build",
-    "watch:build": "tsc -w & babel -w -d lib lib-es6"
+    "watch:build": "tsc -w & babel -w -d lib lib-es6",
+    "preversion": "npm run build && npm run test",
+    "postversion": "git push && git push --tags"
   }
 }
