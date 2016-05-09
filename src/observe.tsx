@@ -1,7 +1,7 @@
 import React, {Component, PropTypes, ComponentClass, Validator} from 'react';
 import {map, toPairs} from 'ramda';
 import {
-  ObservableStoreContext,
+  StoreObserverProviderContext,
   StoreSelector,
   StoreObserverState,
   KeyPathHandlerPair,
@@ -17,8 +17,9 @@ export default function<P> (
     static contextTypes: {[key: string]: Validator<any>} = {
       observableStore: PropTypes.object.isRequired,
     };
+    static propTypes = Comp.propTypes;
 
-    context: ObservableStoreContext;
+    context: StoreObserverProviderContext;
     private keyPathHandlerPairs: KeyPathHandlerPair[];
 
     constructor(props, context) {

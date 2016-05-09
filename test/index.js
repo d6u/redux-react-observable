@@ -1,3 +1,4 @@
 'use strict';
 
-require('./src/ObservableStore.test');
+require('./src/StoreObserverProvider.test');
+require('./src/observe.test');

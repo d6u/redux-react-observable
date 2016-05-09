@@ -1,11 +1,11 @@
 import {Store} from 'redux';
 import {ObserveObjectPath} from 'observe-object-path';
 
-export interface ObservableStoreProps {
+export interface StoreObserverProviderProps {
   store: Store<any>;
 }
 
-export interface ObservableStoreContext {
+export interface StoreObserverProviderContext {
   observableStore: ObserveObjectPath;
 }
 

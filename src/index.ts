@@ -1,2 +1,2 @@
-export {default as ObservableStore} from './ObservableStore';
+export {default as StoreObserverProvider} from './StoreObserverProvider';
 export {default as observe} from './observe';

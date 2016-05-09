@@ -4,17 +4,17 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const TestUtils = require('react-addons-test-utils');
 const ObserveObjectPath = require('observe-object-path').ObserveObjectPath;
+const StoreObserverProvider = require('../../lib').StoreObserverProvider;
 const {getChild, getMockStore} = require('../helpers');
-const ObservableStore = require('../../lib').ObservableStore;
 
-describe('ObservableStore', () => {
+describe('StoreObserverProvider', () => {
 
-  it('adds "observableStore" to child context', () => {
+  it('adds "StoreObserverProvider" to child context', () => {
     const Child = getChild();
     const tree = TestUtils.renderIntoDocument(
-      <ObservableStore store={getMockStore()}>
+      <StoreObserverProvider store={getMockStore()}>
         <Child/>
-      </ObservableStore>
+      </StoreObserverProvider>
     );
     const child = TestUtils.findRenderedComponentWithType(tree, Child);
     expect(child.context.observableStore instanceof ObserveObjectPath).toBeTruthy();
@@ -23,9 +23,9 @@ describe('ObservableStore', () => {
   it('subscribe to store when mount', () => {
     const store = getMockStore();
     const tree = TestUtils.renderIntoDocument(
-      <ObservableStore store={store}>
+      <StoreObserverProvider store={store}>
         <div/>
-      </ObservableStore>
+      </StoreObserverProvider>
     );
     expect(store.subscribe).toHaveBeenCalled();
   });
@@ -36,9 +36,9 @@ describe('ObservableStore', () => {
     store.subscribe.and.callFake(() => unsubscribe);
     const container = document.createElement('div');
     ReactDOM.render(
-      <ObservableStore store={store}>
+      <StoreObserverProvider store={store}>
         <div/>
-      </ObservableStore>,
+      </StoreObserverProvider>,
       container
     );
     ReactDOM.unmountComponentAtNode(container);
