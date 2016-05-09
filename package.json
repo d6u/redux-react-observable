@@ -63,6 +63,7 @@
     "build:lib-es6": "tsc",
     "build:lib": "babel -d lib lib-es6",
     "build": "npm run clean && npm run build:lib-es6 && npm run build:lib",
+    "build-examples": "webpack --config examples/counter/webpack.config.js",
     "prewatch:build": "npm run build",
     "watch:build": "tsc -w & babel -w -d lib lib-es6",
     "preversion": "npm run build && npm run test",
