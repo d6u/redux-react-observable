@@ -27,7 +27,7 @@
     "src"
   ],
   "dependencies": {
-    "observe-object-path": "0.4.1",
+    "observe-object-path": "0.4.2",
     "ramda": "0.21.0"
   },
   "devDependencies": {
