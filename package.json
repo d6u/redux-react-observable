@@ -42,15 +42,14 @@
     "webpack": "1.13.0"
   },
   "scripts": {
-    "clean": "rimraf lib lib-es6 test-es5",
+    "clean": "rimraf lib lib-es6",
     "lint": "tslint src/*",
     "test": "karma start",
     "watch:test": "karma start --no-single-run",
     "build:lib-es6": "tsc",
     "build:lib": "babel -d lib lib-es6",
-    "build:test": "babel -d test test-es5",
     "build": "npm run clean && npm run build:lib-es6 && npm run build:lib",
     "prewatch:build": "npm run build",
-    "watch:build": "tsc -w & babel -w -d lib lib-es6 & babel -w -d test-es5 test"
+    "watch:build": "tsc -w & babel -w -d lib lib-es6"
   }
 }
