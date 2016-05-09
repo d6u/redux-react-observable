@@ -1,0 +1,17 @@
+machine:
+  node:
+    version: 4
+test:
+  override:
+    - typings install
+    - npm run build
+    - npm test
+deployment:
+  release:
+    tag: /v[0-9]+(\.[0-9]+)*/
+    owner: d6u
+    commands:
+      - typings install
+      - npm run build
+      - echo -e "$NPM_USER\n$NPM_PASS\n$NPM_EMAIL" | npm login
+      - npm publish
