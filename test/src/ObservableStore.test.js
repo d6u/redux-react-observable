@@ -1,14 +1,42 @@
 'use strict';
 
-const test = require('tape');
+const React = require('react');
+const TestUtils = require('react-addons-test-utils');
+const ObserveObjectPath = require('observe-object-path').ObserveObjectPath;
+const ObservableStore = require('../../lib').ObservableStore;
 
-test('timing test', (t) => {
-  t.plan(2);
+describe('ObservableStore', () => {
 
-  t.equal(typeof Date.now, 'function');
-  const start = Date.now();
+  it('it adds "observableStore" to child context', () => {
+    const Child = getChild();
+    const tree = TestUtils.renderIntoDocument(
+      <ObservableStore store={getMockStore()}>
+        <Child/>
+      </ObservableStore>
+    );
+    const child = TestUtils.findRenderedComponentWithType(tree, Child);
+    expect(child.context.observableStore instanceof ObserveObjectPath).toBeTruthy();
+  });
 
-  setTimeout(() => {
-    t.equal(Date.now() - start, 100);
-  }, 100);
 });
+
+function getChild() {
+  class Child extends React.Component {
+    render() {
+      return <div/>
+    }
+  }
+
+  Child.contextTypes = {
+    observableStore: React.PropTypes.object.isRequired,
+  };
+
+  return Child;
+}
+
+function getMockStore() {
+  return {
+    getState: () => null,
+    subscribe: () => null,
+  };
+}
