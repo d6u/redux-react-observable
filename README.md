@@ -1,7 +1,7 @@
 # Redux Observe Store Path
 
 [![npm version](https://badge.fury.io/js/redux-observe-store-path.svg)](https://badge.fury.io/js/redux-observe-store-path)
-[![Circle CI](https://circleci.com/gh/d6u/redux-observe-store-path/tree/master.svg?style=svg)](https://circleci.com/gh/d6u/redux-observe-store-path/tree/master)
+[![Circle CI](https://circleci.com/gh/d6u/redux-react-observable/tree/master.svg?style=svg)](https://circleci.com/gh/d6u/redux-react-observable/tree/master)
 
 **This is an experiment**
 
