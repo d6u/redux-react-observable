@@ -1,10 +1,23 @@
 {
   "name": "redux-observe-store-path",
   "version": "0.0.1",
-  "keywords": [],
-  "description": "",
+  "keywords": [
+    "redux",
+    "react",
+    "react-component",
+    "observable"
+  ],
+  "homepage": "https://github.com/d6u/redux-observe-store-path#readme",
+  "description": "Descriptive Redux React binding",
   "author": "Daiwei Lu <daiweilu123@gmail.com> (http://daiwei.lu/)",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d6u/redux-observe-store-path.git"
+  },
+  "bugs": {
+    "url": "https://github.com/d6u/redux-observe-store-path/issues"
+  },
   "main": "lib/index.js",
   "jsnext:main": "lib-es6/index.js",
   "typings": "lib-es6/index.d.ts",
