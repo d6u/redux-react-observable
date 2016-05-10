@@ -36,4 +36,4 @@ node_modules
 /lib
 .DS_Store
 /typings
-/examples/**/bundle.js
+/examples/**/bundle*.js
