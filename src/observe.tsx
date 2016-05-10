@@ -5,6 +5,8 @@ import {
   StoreSelector,
   StoreObserverState,
   KeyPathHandlerPair,
+  ObserverRegisterHandlerUnregister,
+  ObserverRegisterHandlerEventType,
 } from './interfaces';
 
 export default function<P> (
@@ -16,11 +18,14 @@ export default function<P> (
 
     static contextTypes: {[key: string]: Validator<any>} = {
       observableStore: PropTypes.object.isRequired,
+      observerRegister: PropTypes.func.isRequired,
     };
     static propTypes = Comp.propTypes;
 
     context: StoreObserverProviderContext;
     private keyPathHandlerPairs: KeyPathHandlerPair[];
+    private observerRegisterUnregister: ObserverRegisterHandlerUnregister;
+    private tempState: StoreObserverState;
 
     constructor(props, context) {
       super(props, context);
@@ -28,11 +33,21 @@ export default function<P> (
     }
 
     componentWillMount() {
+      this.observerRegisterUnregister = this.context.observerRegister((type) => {
+        if (type === ObserverRegisterHandlerEventType.StartUpdate) {
+          this.tempState = {};
+        } else if (type === ObserverRegisterHandlerEventType.FinishUpdate) {
+          this.setState(this.tempState);
+          this.tempState = null;
+        }
+      });
       this.onKeyPathHandlers(this.props);
     }
 
     componentWillUnmount() {
       this.offKeyPathHandlers();
+      this.observerRegisterUnregister();
+      this.observerRegisterUnregister = null;
     }
 
     componentWillReceiveProps(nextProps: P) {
@@ -68,9 +83,7 @@ export default function<P> (
       const pairs = toPairs(keyPathMap) as [string, string[]][];
       this.keyPathHandlerPairs = pairs.map<KeyPathHandlerPair>(([name, keyPath]) => {
         const handler = (value: any) => {
-          this.setState({
-            [name]: value,
-          });
+          this.tempState[name] = value;
         };
         this.context.observableStore.on(keyPath, handler);
         return [keyPath, handler];

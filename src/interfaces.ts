@@ -7,6 +7,20 @@ export interface StoreObserverProviderProps {
 
 export interface StoreObserverProviderContext {
   observableStore: ObserveObjectPath;
+  observerRegister: (handler: ObserverRegisterHandler) => ObserverRegisterHandlerUnregister;
+}
+
+export interface ObserverRegisterHandlerUnregister {
+  (): void;
+}
+
+export enum ObserverRegisterHandlerEventType {
+  StartUpdate,
+  FinishUpdate,
+}
+
+export interface ObserverRegisterHandler {
+  (type: ObserverRegisterHandlerEventType): void;
 }
 
 export interface KeyPathMap {
