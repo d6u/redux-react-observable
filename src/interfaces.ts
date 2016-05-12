@@ -1,3 +1,4 @@
+import {Validator} from 'react';
 import {Store} from 'redux';
 import {ObserveObjectPath} from 'observe-object-path';
 
@@ -5,22 +6,12 @@ export interface StoreObserverProviderProps {
   store: Store<any>;
 }
 
+export interface StoreObserverProviderContextType {
+  [key: string]: Validator<any>;
+}
+
 export interface StoreObserverProviderContext {
   observableStore: ObserveObjectPath;
-  observerRegister: (handler: ObserverRegisterHandler) => ObserverRegisterHandlerUnregister;
-}
-
-export interface ObserverRegisterHandlerUnregister {
-  (): void;
-}
-
-export enum ObserverRegisterHandlerEventType {
-  StartUpdate,
-  FinishUpdate,
-}
-
-export interface ObserverRegisterHandler {
-  (type: ObserverRegisterHandlerEventType): void;
 }
 
 export interface KeyPathMap {
@@ -35,8 +26,6 @@ export interface StoreObserverState {
   [key: string]: any;
 }
 
-export interface KeyPathHandler {
+export interface ChangeHandler {
   (value: any): void;
 }
-
-export type KeyPathHandlerPair = [string[], KeyPathHandler];

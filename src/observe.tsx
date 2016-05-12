@@ -1,12 +1,12 @@
-import React, {Component, PropTypes, ComponentClass, Validator} from 'react';
-import {map, toPairs} from 'ramda';
+import React, {Component, PropTypes, ComponentClass} from 'react';
+import mapValues from 'lodash/mapValues';
 import {
+  StoreObserverProviderContextType,
   StoreObserverProviderContext,
   StoreSelector,
   StoreObserverState,
-  KeyPathHandlerPair,
-  ObserverRegisterHandlerUnregister,
-  ObserverRegisterHandlerEventType,
+  ChangeHandler,
+  KeyPathMap,
 } from './interfaces';
 
 export default function<P> (
@@ -16,16 +16,15 @@ export default function<P> (
 
   return class StoreObserver extends Component<P, StoreObserverState> {
 
-    static contextTypes: {[key: string]: Validator<any>} = {
+    static contextTypes: StoreObserverProviderContextType = {
       observableStore: PropTypes.object.isRequired,
-      observerRegister: PropTypes.func.isRequired,
     };
     static propTypes = Comp.propTypes;
 
-    context: StoreObserverProviderContext;
-    private keyPathHandlerPairs: KeyPathHandlerPair[];
-    private observerRegisterUnregister: ObserverRegisterHandlerUnregister;
-    private tempState: StoreObserverState;
+    public context: StoreObserverProviderContext;
+
+    private changeHandler: ChangeHandler;
+    private keyPathMap: KeyPathMap;
 
     constructor(props, context) {
       super(props, context);
@@ -33,21 +32,11 @@ export default function<P> (
     }
 
     componentWillMount() {
-      this.observerRegisterUnregister = this.context.observerRegister((type) => {
-        if (type === ObserverRegisterHandlerEventType.StartUpdate) {
-          this.tempState = {};
-        } else if (type === ObserverRegisterHandlerEventType.FinishUpdate) {
-          this.setState(this.tempState);
-          this.tempState = null;
-        }
-      });
       this.onKeyPathHandlers(this.props);
     }
 
     componentWillUnmount() {
       this.offKeyPathHandlers();
-      this.observerRegisterUnregister();
-      this.observerRegisterUnregister = null;
     }
 
     componentWillReceiveProps(nextProps: P) {
@@ -59,17 +48,15 @@ export default function<P> (
     }
 
     private getCurrentState(props: P): StoreObserverState {
-      return map<string[], any>(
-        (paths) => this.context.observableStore.get(paths),
-        selector(props)
+      return mapValues<string[], any>(
+        selector(props),
+        (paths) => this.context.observableStore.get(paths)
       );
     }
 
     private offKeyPathHandlers() {
-      if (this.keyPathHandlerPairs) {
-        this.keyPathHandlerPairs.forEach(([keyPath, handler]) => {
-          this.context.observableStore.off(keyPath, handler);
-        });
+      if (this.keyPathMap && this.changeHandler) {
+        this.context.observableStore.off(this.keyPathMap, this.changeHandler);
       }
     }
 
@@ -79,15 +66,12 @@ export default function<P> (
       const state = this.getCurrentState(props);
       this.setState(state);
 
-      const keyPathMap = selector(props);
-      const pairs = toPairs(keyPathMap) as [string, string[]][];
-      this.keyPathHandlerPairs = pairs.map<KeyPathHandlerPair>(([name, keyPath]) => {
-        const handler = (value: any) => {
-          this.tempState[name] = value;
-        };
-        this.context.observableStore.on(keyPath, handler);
-        return [keyPath, handler];
-      });
+      this.keyPathMap = selector(props);
+      this.changeHandler = (newState: StoreObserverState) => {
+        this.setState(newState);
+      };
+
+      this.context.observableStore.on(this.keyPathMap, this.changeHandler);
     }
 
   };
